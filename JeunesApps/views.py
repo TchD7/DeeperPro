@@ -16,6 +16,7 @@ from .resources import JeunesResource
 from django.http import HttpResponse
 from django.contrib.admin.models import LogEntry
 from tablib import Dataset
+from Adultes.models import AdultesPost
 
 
 
@@ -88,7 +89,9 @@ def home(request):
     nombre_ouvriers = OuviresJeunesPost.objects.all().count()
     nombre_enfants = EnfantsPost.objects.all().count()
     annonces_list = Annonces.objects.all().order_by('-add_date')[:1]
-    total = nombre_jeunes + nombre_ouvriers + nombre_enfants
+    nombre_adulte = AdultesPost.objects.all().count()
+    nombre_t_jeunes = nombre_jeunes + nombre_ouvriers
+    total = nombre_t_jeunes + nombre_enfants + nombre_adulte
     mydate = datetime.datetime.now()
     descriptionP_list = DescriptionP.objects.all()
     motutilisateur_list = MotUtilisateur.objects.all()
@@ -96,7 +99,8 @@ def home(request):
     
     return render(request, 'home.html', {'nombre_jeunes':nombre_jeunes, 'nombre_ouvriers':nombre_ouvriers, 'nombre_enfants':nombre_enfants, 
                                          'Region_list':Region_list, 'total':total, 'annonces_list':annonces_list, 'mydate':mydate, 
-                                         'Groupe_list':Groupe_list, 'descriptionP_list':descriptionP_list, 'motutilisateur_list':motutilisateur_list, 'imageDeP_list':imageDeP_list}) 
+                                         'Groupe_list':Groupe_list, 'descriptionP_list':descriptionP_list, 'motutilisateur_list':motutilisateur_list,
+                                          'imageDeP_list':imageDeP_list, 'nombre_adulte':nombre_adulte, 'nombre_t_jeunes':nombre_t_jeunes}) 
 
 
 class Add_Ouvriers(CreateView):
