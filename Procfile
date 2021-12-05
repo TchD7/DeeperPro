@@ -1,1 +1,1 @@
-web: gunicorn DeeperPro.wsgi --log-file -
+web gunicorn DeeperPro.wsgi:application --log-file -
