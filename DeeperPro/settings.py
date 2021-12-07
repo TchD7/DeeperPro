@@ -12,9 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
-
+import _locale
+_locale._getdefaultlocale = (lambda *args: ['en_US', 'utf8'])
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#t@as(-253gg74vz4jcflm2#i$08w+cbr6@#$mquh7e(u@+91b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://deeperlifetogo.herokuapp.com/','127.0.0.1:8000']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     'LumiereCite',
     'simple_history',
     
+    
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -67,13 +67,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
 ]
 
 ROOT_URLCONF = 'DeeperPro.urls'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 TEMPLATES = [
     {
@@ -97,17 +93,12 @@ WSGI_APPLICATION = 'DeeperPro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
-    'default': dj_database_url.config()
-        
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -165,8 +156,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+
 
 
 
